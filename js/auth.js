@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
       window.KALAM.setCurrentUser(user);
       const errorBox = document.getElementById('authError');
       if (errorBox) errorBox.hidden = true;
-      window.location.href = 'my-books.html';
+      window.location.href = window.KALAM.getStudentReturnPage();
     });
   }
 
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
       window.KALAM.setCurrentAdmin(admin);
       const errorBox = document.getElementById('authError');
       if (errorBox) errorBox.hidden = true;
-      if (admin.role === 'rental') {
+      if (admin.role === 'admin' || admin.role === 'rental') {
         window.location.href = 'rental-admin.html';
       } else {
         window.location.href = 'sale-admin.html';
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (window.location.pathname.endsWith('login.html') && window.KALAM.getCurrentUser()) {
-    window.location.href = 'my-books.html';
+    window.location.href = window.KALAM.getStudentReturnPage();
   }
 });
 

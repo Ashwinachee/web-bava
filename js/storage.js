@@ -29,23 +29,37 @@ function writeStorage(key, value) {
 }
 
 function ensureDemoData() {
-  if (!readStorage(STORAGE_KEYS.users, [] ).length) {
-    writeStorage(STORAGE_KEYS.users, [{
-      id: 'STU-2024-001',
-      name: 'Asha Nair',
-      email: 'asha@kalam.edu',
-      phone: '9876543210',
-      password: 'student123',
-      department: 'Computer Science',
-      year: 'III Year'
-    }]);
-  }
+  const demoStudent = {
+    id: 'STU-2024-001',
+    name: 'Bava',
+    email: 'bava@kalam.edu',
+    phone: '9876543210',
+    password: 'bava@20',
+    department: 'Computer Science',
+    year: 'III Year'
+  };
+  const users = readStorage(STORAGE_KEYS.users, []);
+  const demoStudentIndex = users.findIndex(function (user) {
+    return user.id === demoStudent.id || user.email === 'asha@kalam.edu' || user.email === demoStudent.email;
+  });
+  if (demoStudentIndex === -1) users.push(demoStudent);
+  else users[demoStudentIndex] = Object.assign({}, users[demoStudentIndex], demoStudent);
+  writeStorage(STORAGE_KEYS.users, users);
 
-  if (!readStorage(STORAGE_KEYS.admins, []).length) {
-    writeStorage(STORAGE_KEYS.admins, [
-      { username: 'rentaladmin', password: 'rental123', role: 'rental' },
-      { username: 'saleadmin', password: 'sale123', role: 'sale' }
-    ]);
+  const previousAdminUsernames = ['rentaladmin', 'saleadmin'];
+  const admins = readStorage(STORAGE_KEYS.admins, []).filter(function (admin) {
+    return previousAdminUsernames.indexOf(admin.username) === -1 && admin.username !== 'bava@kalam.edu';
+  });
+  admins.push({ username: 'bava@kalam.edu', password: 'Admin@20', role: 'admin' });
+  writeStorage(STORAGE_KEYS.admins, admins);
+
+  const currentUser = getCurrentUser();
+  if (currentUser && (currentUser.id === demoStudent.id || currentUser.email === 'asha@kalam.edu')) {
+    setCurrentUser(demoStudent);
+  }
+  const currentAdmin = getCurrentAdmin();
+  if (currentAdmin && previousAdminUsernames.indexOf(currentAdmin.username) !== -1) {
+    setCurrentAdmin(null);
   }
 
   if (!readStorage(STORAGE_KEYS.rentalBooks, []).length) {
@@ -117,6 +131,24 @@ function getCurrentUser() {
   return readStorage(STORAGE_KEYS.currentUser, null);
 }
 
+function getStudentReturnPage() {
+  const returnTo = new URLSearchParams(window.location.search).get('returnTo');
+  return returnTo === 'my-orders.html' || returnTo === 'my-books.html'
+    ? returnTo
+    : 'my-books.html';
+}
+
+function requireStudentLogin() {
+  if (getCurrentUser()) return true;
+
+  const page = window.location.pathname.split('/').pop();
+  const returnTo = page === 'my-orders.html' || page === 'my-books.html'
+    ? page
+    : 'my-books.html';
+  window.location.replace('login.html?returnTo=' + encodeURIComponent(returnTo));
+  return false;
+}
+
 function setCurrentUser(user) {
   if (!user) {
     localStorage.removeItem(STORAGE_KEYS.currentUser);
@@ -155,6 +187,8 @@ window.KALAM = {
   writeStorage: writeStorage,
   ensureDemoData: ensureDemoData,
   getCurrentUser: getCurrentUser,
+  getStudentReturnPage: getStudentReturnPage,
+  requireStudentLogin: requireStudentLogin,
   setCurrentUser: setCurrentUser,
   getCurrentAdmin: getCurrentAdmin,
   setCurrentAdmin: setCurrentAdmin,

@@ -1,15 +1,13 @@
 document.addEventListener('keydown', function (event) {
-  const target = event.target;
-  const isEditing = target instanceof HTMLElement &&
-    (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
-  if (isEditing || !event.altKey || !event.shiftKey || event.ctrlKey || event.metaKey || event.key.toLowerCase() !== 'a') {
-    return;
-  }
+  const isAdminShortcut = (event.key.toLowerCase() === 'a' || event.code === 'KeyA') &&
+    ((event.altKey && event.shiftKey && !event.ctrlKey && !event.metaKey) ||
+      (event.ctrlKey && event.altKey && !event.shiftKey && !event.metaKey));
+  if (!isAdminShortcut) return;
 
-  if (window.location.pathname.endsWith('/admin-login.html')) return;
   event.preventDefault();
-  window.location.href = 'admin-login.html';
-});
+  event.stopImmediatePropagation();
+  window.location.assign(new URL('rental-admin.html', window.location.href).href);
+}, true);
 
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.page-tools, .back-button').forEach(function (element) {
@@ -25,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   const activePage = currentPage === 'admin-login.html' ? '' : currentPage;
+  const currentUser = window.KALAM && window.KALAM.getCurrentUser();
   nav.querySelectorAll('a.nav-link[href="about.html"], a.nav-link[href="contact.html"]').forEach(function (link) {
     link.remove();
   });
@@ -50,28 +49,95 @@ document.addEventListener('DOMContentLoaded', function () {
   cartLink.classList.add('nav-link', 'cart-link');
   cartLink.classList.toggle('active', currentPage === 'cart.html');
 
-  if (!loginLink) {
-    loginLink = document.createElement('a');
-    loginLink.className = 'nav-link login-link';
-    loginLink.href = 'login.html';
-    loginLink.dataset.siteLink = 'login';
-  }
-  if (loginLink.parentElement !== actions) actions.appendChild(loginLink);
-  loginLink.classList.add('nav-link', 'login-link');
-  loginLink.textContent = 'Login';
-  loginLink.href = 'login.html';
-  if (window.KALAM && window.KALAM.getCurrentUser()) {
-    loginLink.textContent = window.KALAM.getCurrentUser().name.split(' ')[0];
-    loginLink.href = 'my-books.html';
-  }
-
   nav.querySelectorAll('a.nav-link').forEach(function (link) {
     link.classList.toggle('active', link.getAttribute('href') === activePage);
   });
 
-  loginLink.classList.toggle('active', loginLink.getAttribute('href') === activePage);
+  const existingProfile = actions.querySelector('[data-site-link="profile"]');
+  if (existingProfile) existingProfile.remove();
+  const existingLogout = actions.querySelector('[data-site-link="logout"]');
+  if (existingLogout) existingLogout.remove();
 
-  if (!nav.querySelector('[data-site-link="orders"]')) {
+  if (currentUser) {
+    nav.querySelectorAll('a.nav-link[href="my-books.html"], a.nav-link[href="my-orders.html"]').forEach(function (link) {
+      link.remove();
+    });
+    if (loginLink) loginLink.remove();
+
+    const profile = document.createElement('div');
+    profile.className = 'profile-menu';
+    profile.dataset.siteLink = 'profile';
+
+    const profileButton = document.createElement('button');
+    profileButton.className = 'nav-link login-link profile-trigger';
+    profileButton.type = 'button';
+    profileButton.setAttribute('aria-haspopup', 'true');
+    profileButton.setAttribute('aria-expanded', 'false');
+    profileButton.textContent = currentUser.name.split(' ')[0];
+
+    const profileDropdown = document.createElement('div');
+    profileDropdown.className = 'profile-dropdown';
+    profileDropdown.hidden = true;
+
+    const booksLink = document.createElement('a');
+    booksLink.href = 'my-books.html';
+    booksLink.textContent = 'My Books';
+    booksLink.classList.toggle('active', currentPage === 'my-books.html');
+
+    const ordersLink = document.createElement('a');
+    ordersLink.href = 'my-orders.html';
+    ordersLink.textContent = 'My Orders';
+    ordersLink.classList.toggle('active', currentPage === 'my-orders.html');
+
+    const logoutButton = document.createElement('button');
+    logoutButton.type = 'button';
+    logoutButton.textContent = 'Logout';
+    logoutButton.dataset.siteLink = 'logout';
+
+    profileDropdown.append(booksLink, ordersLink, logoutButton);
+    profile.append(profileButton, profileDropdown);
+    actions.appendChild(profile);
+
+    profileButton.addEventListener('click', function () {
+      const isOpen = profileDropdown.hidden;
+      profileDropdown.hidden = !isOpen;
+      profileButton.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    logoutButton.addEventListener('click', function () {
+      window.KALAM.setCurrentUser(null);
+      window.location.assign('index.html');
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!profile.contains(event.target)) {
+        profileDropdown.hidden = true;
+        profileButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !profileDropdown.hidden) {
+        profileDropdown.hidden = true;
+        profileButton.setAttribute('aria-expanded', 'false');
+        profileButton.focus();
+      }
+    });
+  } else {
+    if (!loginLink) {
+      loginLink = document.createElement('a');
+      loginLink.dataset.siteLink = 'login';
+      actions.appendChild(loginLink);
+    } else if (loginLink.parentElement !== actions) {
+      actions.appendChild(loginLink);
+    }
+    loginLink.classList.add('nav-link', 'login-link');
+    loginLink.textContent = 'Login';
+    loginLink.href = 'login.html';
+    loginLink.classList.toggle('active', loginLink.getAttribute('href') === activePage);
+  }
+
+  if (!currentUser && !nav.querySelector('[data-site-link="orders"]')) {
     const ordersLink = document.createElement('a');
     ordersLink.className = 'nav-link';
     ordersLink.href = 'my-orders.html';

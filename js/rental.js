@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
+  if (document.getElementById('myBooksTable') && !window.KALAM.requireStudentLogin()) {
+    return;
+  }
+
   window.KALAM.ensureDemoData();
 
   if (document.getElementById('rentalBookList')) {

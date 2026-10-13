@@ -21,9 +21,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const orderId = 'ORD-' + Date.now().toString().slice(-6);
         const transactionId = 'TXN-' + Date.now().toString().slice(-8);
         const method = document.getElementById('paymentMethod').value;
+        const currentUser = window.KALAM.getCurrentUser();
         const orders = window.KALAM.readStorage(STORAGE_KEYS.orders, []);
         orders.unshift({
           id: orderId,
+          studentId: currentUser ? currentUser.id : '',
           date: new Date().toISOString().slice(0, 10),
           books: cart.map(function (item) { return item.title + ' (' + item.quantity + ')'; }).join(', '),
           quantity: cart.reduce(function (sum, item) { return sum + Number(item.quantity || 1); }, 0),

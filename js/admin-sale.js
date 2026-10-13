@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   window.KALAM.ensureDemoData();
   const admin = window.KALAM.getCurrentAdmin();
-  if (!admin || admin.role !== 'sale') {
+  if (!admin || (admin.role !== 'sale' && admin.role !== 'admin')) {
     window.location.href = 'admin-login.html';
     return;
   }

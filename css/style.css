@@ -364,6 +364,15 @@ body {
 .topbar .login-link { background: #c28d50; color: #2f2118; }
 .topbar .nav-link.login-link:hover,
 .topbar .nav-link.login-link.active { background: #ddb477; color: #2f2118; }
+.profile-menu { position: relative; }
+.profile-trigger { border: 0; cursor: pointer; font: inherit; }
+.profile-dropdown { position: absolute; z-index: 40; top: calc(100% + 8px); right: 0; min-width: 168px; padding: 7px; border: 1px solid rgba(92, 61, 37, .2); border-radius: 12px; background: #fff8ed; box-shadow: 0 12px 28px rgba(49, 32, 20, .22); }
+.profile-dropdown[hidden] { display: none; }
+.profile-dropdown a,
+.profile-dropdown button { display: block; width: 100%; padding: 10px 12px; border: 0; border-radius: 8px; background: transparent; color: #503622; font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+.profile-dropdown a:hover,
+.profile-dropdown button:hover,
+.profile-dropdown a.active { background: #ead9c1; color: #382719; }
 .topbar .mobile-menu-btn { border-color: rgba(255, 240, 216, .35); background: rgba(255, 240, 216, .1); }
 .topbar .main-nav { background: #503622; border-color: rgba(255, 240, 216, .2); }
 .topbar .search-box { border-color: rgba(255, 240, 216, .24); background: rgba(255, 250, 241, .95); }

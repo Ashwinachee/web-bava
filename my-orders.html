@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Orders | Kalam Arivalayam</title>
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=7">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
@@ -14,13 +14,18 @@
   <script src="js/storage.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      if (!window.KALAM.requireStudentLogin()) return;
+
+      const currentUser = window.KALAM.getCurrentUser();
       const orders = window.KALAM.readStorage(STORAGE_KEYS.orders, []);
       const tbody = document.getElementById('ordersTable');
-      tbody.innerHTML = orders.map(function (order) {
+      tbody.innerHTML = orders.filter(function (order) {
+        return order.studentId === currentUser.id;
+      }).map(function (order) {
         return '<tr><td>' + order.id + '</td><td>' + order.date + '</td><td>' + order.books + '</td><td>' + (order.quantity || 1) + '</td><td>₹' + order.amount + '</td><td>' + order.paymentStatus + '</td><td>' + order.orderStatus + '</td></tr>';
       }).join('');
     });
   </script>
-  <script src="js/site.js?v=5"></script>
+  <script src="js/site.js?v=9"></script>
 </body>
 </html>

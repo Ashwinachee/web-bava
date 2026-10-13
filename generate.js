@@ -1524,6 +1524,17 @@ const files = {
 
 files['admin-login.html'] = fs.readFileSync(path.join(root, 'admin-login.html'), 'utf8');
 files['login.html'] = fs.readFileSync(path.join(root, 'login.html'), 'utf8');
+files['my-books.html'] = fs.readFileSync(path.join(root, 'my-books.html'), 'utf8');
+files['my-orders.html'] = fs.readFileSync(path.join(root, 'my-orders.html'), 'utf8');
+files['js/storage.js'] = fs.readFileSync(path.join(root, 'js', 'storage.js'), 'utf8');
+files['js/auth.js'] = fs.readFileSync(path.join(root, 'js', 'auth.js'), 'utf8');
+files['js/rental.js'] = fs.readFileSync(path.join(root, 'js', 'rental.js'), 'utf8');
+files['js/payment.js'] = fs.readFileSync(path.join(root, 'js', 'payment.js'), 'utf8');
+files['js/admin-rental.js'] = fs.readFileSync(path.join(root, 'js', 'admin-rental.js'), 'utf8');
+files['js/admin-sale.js'] = fs.readFileSync(path.join(root, 'js', 'admin-sale.js'), 'utf8');
+files['js/site.js'] = fs.readFileSync(path.join(root, 'js', 'site.js'), 'utf8');
+files['rental-admin.html'] = fs.readFileSync(path.join(root, 'rental-admin.html'), 'utf8');
+files['sale-admin.html'] = fs.readFileSync(path.join(root, 'sale-admin.html'), 'utf8');
 files['css/admin-login.css'] = fs.readFileSync(path.join(root, 'css', 'admin-login.css'), 'utf8');
 
 Object.entries(files).forEach(([relativePath, content]) => {
