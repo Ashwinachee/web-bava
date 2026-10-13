@@ -1,0 +1,4 @@
+@media (max-width: 768px) {
+  .brand-name { font-size: 1rem; }
+  .search-box { display: none; }
+}

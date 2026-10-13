@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f2f1eb">
+  <title>Staff Sign In | Kalam Arivalayam</title>
+  <link rel="stylesheet" href="css/admin-login.css?v=2">
+</head>
+<body class="admin-login-page">
+  <main class="login-shell">
+    <section class="login-story" aria-label="Kalam Arivalayam staff portal">
+      <a class="portal-brand" href="index.html" aria-label="Kalam Arivalayam home">
+        <span class="brand-mark" aria-hidden="true">K</span>
+        <span><strong>KALAM ARIVALAYAM</strong><small>Library &amp; Bookstore</small></span>
+      </a>
+
+      <div class="story-copy">
+        <span class="story-label"><span aria-hidden="true"></span> THE STAFF ROOM</span>
+        <h1>Make room<br>for <em>good stories.</em></h1>
+        <p>A considered space for the people who keep our library moving.</p>
+      </div>
+
+      <div class="story-caption">
+        <span class="caption-rule" aria-hidden="true"></span>
+        <span>READ. LEARN. GROW.</span>
+        <span class="caption-location">COIMBATORE · TAMIL NADU</span>
+      </div>
+    </section>
+
+    <section class="login-panel" aria-labelledby="signInTitle">
+      <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Return to the library</a>
+
+      <div class="form-heading">
+        <span class="form-kicker">ADMINISTRATOR ACCESS</span>
+        <h2 id="signInTitle">Welcome back.</h2>
+        <p>Sign in with your staff credentials to continue.</p>
+      </div>
+
+      <div id="authError" class="login-error" role="alert" aria-live="assertive" hidden></div>
+
+      <form id="adminLoginForm">
+        <div class="field-group">
+          <label for="adminUsername">Staff username</label>
+          <input id="adminUsername" name="username" type="text" autocomplete="username" placeholder="e.g. your staff username" required>
+        </div>
+
+        <div class="field-group">
+          <label for="adminPassword">Password</label>
+          <div class="password-wrap">
+            <input id="adminPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+            <button id="toggleAdminPassword" class="password-toggle" type="button" aria-controls="adminPassword" aria-pressed="false">Show</button>
+          </div>
+        </div>
+
+        <button class="sign-in-button" type="submit">
+          <span>Sign in to admin</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </form>
+
+      <p class="access-note"><span class="access-icon" aria-hidden="true">✳</span> Private access for authorized staff</p>
+      <p class="account-switch">Student? <a href="login.html">Sign in to your account</a></p>
+    </section>
+  </main>
+  <footer class="page-note">
+    <span>© 2026 Kalam Arivalayam</span>
+    <span>STAFF PORTAL <span aria-hidden="true">·</span> PRIVATE ENTRY</span>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/site.js?v=5"></script>
+</body>
+</html>

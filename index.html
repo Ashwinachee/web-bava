@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalam Arivalayam</title>
+  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="home-page">
+  <div id="toast" class="toast"></div>
+  <header class="topbar">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=200&q=80" class="brand-logo" alt="Kalam Arivalayam">
+        <div>
+          <span class="brand-name">KALAM ARIVALAYAM</span>
+          <small>Read. Learn. Grow.</small>
+        </div>
+      </a>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="books.html" class="nav-link">Books</a>
+        <a href="rent.html" class="nav-link">Rent a Book</a>
+        <a href="sale.html" class="nav-link">Buy Books</a>
+        <a href="my-books.html" class="nav-link">My Books</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="search-box">
+          <input id="globalSearch" type="text" placeholder="Search books...">
+          <button type="button" class="search-btn">Search</button>
+        </div>
+        <a class="nav-link cart-link" href="cart.html" data-site-link="cart" aria-label="Cart" title="Cart">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.4L22 8H6"></path><circle cx="10" cy="20" r="1"></circle><circle cx="18" cy="20" r="1"></circle></svg>
+        </a>
+        <a class="nav-link login-link" href="login.html" data-site-link="login">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="hero-badge">Digital Library & Bookstore</span>
+          <h1>KALAM ARIVALAYAM</h1>
+          <h2>Your Digital Gateway to Knowledge</h2>
+          <p>Borrow books from our library, purchase your favourite titles, track return deadlines, and manage your reading journey in one place.</p>
+          <nav class="quick-nav" aria-label="Book services">
+            <a href="books.html" class="quick-nav-link">Browse Books</a>
+            <a href="rent.html" class="quick-nav-link">Rent a Book</a>
+            <a href="sale.html" class="quick-nav-link">Buy Books</a>
+          </nav>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-photo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Apj_abdul_kalam.JPG" alt="Portrait of Dr. A. P. J. Abdul Kalam">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/books.js"></script>
+  <script src="js/site.js?v=5"></script>
+</body>
+</html>
